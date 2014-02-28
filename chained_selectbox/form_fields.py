@@ -1,5 +1,6 @@
 from widgets import ChainedSelect
 from django.forms import ChoiceField
+from django_filters.filters import Filter
 
 
 class ChainedChoiceField(ChoiceField):
@@ -8,10 +9,8 @@ class ChainedChoiceField(ChoiceField):
         self.parent_field = parent_field
         self.ajax_url = ajax_url
         self.choices = choices or (('', '--------'), )
-
-        defaults = {
-            'widget': ChainedSelect(parent_field=parent_field, ajax_url=ajax_url),
-            }
+        self.widget = ChainedSelect(parent_field=parent_field, ajax_url=ajax_url)
+        defaults = {'widget': self.widget}
         defaults.update(kwargs)
 
         super(ChainedChoiceField, self).__init__(choices=self.choices, *args, **defaults)
@@ -21,3 +20,5 @@ class ChainedChoiceField(ChoiceField):
         "Dynamic choices so just return True for now"
         return True
 
+class ChainedChoiceFilter(Filter):
+    field_class = ChainedChoiceField
