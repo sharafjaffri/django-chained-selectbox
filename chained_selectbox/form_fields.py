@@ -4,12 +4,11 @@ from django.forms import ChoiceField, MultipleChoiceField
 
 
 class ChainedChoiceField(ChoiceField):
-    def __init__(self, parent_field, ajax_url, grand_parent_field=None, choices=None, *args, **kwargs):
+    def __init__(self, parent_field, ajax_url, choices=None, *args, **kwargs):
 
         self.parent_field = parent_field
         self.ajax_url = ajax_url
         self.choices = choices or (('', '--------'), )
-        self.grand_parent_field = grand_parent_field
         self.widget = ChainedSelect(parent_field=parent_field,
                                     ajax_url=ajax_url)
         defaults = {'widget': self.widget}
@@ -24,11 +23,10 @@ class ChainedChoiceField(ChoiceField):
 
 
 class ChainedMultipleChoiceField(MultipleChoiceField):
-    def __init__(self, parent_field, ajax_url, grand_parent_field=None, choices=None, *args, **kwargs):
+    def __init__(self, parent_field, ajax_url, choices=None, *args, **kwargs):
         self.parent_field = parent_field
         self.ajax_url = ajax_url
         self.choices = choices or ()
-        self.grand_parent_field = grand_parent_field
         self.widget = ChainedSelectMultiple(parent_field=parent_field,
                                             ajax_url=ajax_url)
         defaults = {'widget': self.widget}
