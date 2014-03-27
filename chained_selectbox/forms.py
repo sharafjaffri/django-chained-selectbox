@@ -13,7 +13,7 @@ class ChainedChoicesForm(forms.ModelForm):
     """
     def __init__(self, *args, **kwargs):
         super(ChainedChoicesForm, self).__init__(*args, **kwargs)
-        if kwargs.has_key('instance'):
+        if kwargs.has_key('instance') and kwargs['instance'] is not None:
             instance = kwargs['instance']
             c = Client()
 
