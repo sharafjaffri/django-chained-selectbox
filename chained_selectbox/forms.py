@@ -18,7 +18,7 @@ class ChainedChoicesForm(forms.ModelForm):
             c = Client()
 
             for field_name, field in self.fields.items():
-                if hasattr(field, 'parent_field'):
+                if hasattr(field, 'parent_field') and hasattr(instance, field_name):
                     article = c.get(field.ajax_url, {
                         'field_name' : field_name,
                         'parent_value' : getattr(instance, field.parent_field)
@@ -38,7 +38,7 @@ class ChainedChoicesFilterSet(FilterSet):
             c = Client()
 
             for field_name, field in self.fields.items():
-                if hasattr(field, 'parent_field'):
+                if hasattr(field, 'parent_field') and hasattr(instance, field_name):
                     article = c.get(field.ajax_url, {
                         'field_name' : field_name,
                         'parent_value' : getattr(instance, field.parent_field)
